@@ -10,6 +10,21 @@ h1 {
     margin: auto;
 }
 
+.linked-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 20px;
+}
+
+.list-item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
 .container {
     width: 700px;
     height: 500px;
