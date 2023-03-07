@@ -37,8 +37,9 @@ h1 {
 
 .buttonscontainer {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
     justify-content: space-around;
+    outline: 1px solid red;
 }
 
 .btn {
@@ -50,4 +51,9 @@ h1 {
 
 .btn:hover {
     background-color: skyblue;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
 }
