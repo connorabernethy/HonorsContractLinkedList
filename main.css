@@ -23,6 +23,12 @@ h1 {
     flex-direction: row;
     align-items: center;
     text-align: center;
+    opacity: 100;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.list-item.fade-in {
+    opacity: 1;
 }
 
 .container {
@@ -39,7 +45,6 @@ h1 {
     display: flex;
     flex-flow: row;
     justify-content: space-around;
-    outline: 1px solid red;
 }
 
 .btn {

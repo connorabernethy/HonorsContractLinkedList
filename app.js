@@ -1,11 +1,11 @@
-class LinkedListItem extends HTMLDivElement {
+class LinkedListItem extends HTMLElement {
     constructor() {
         super();
         //this.innerHTML = this.getAttribute('data') || undefined;
     }
 }
 
-class LinkedList extends HTMLLIElement {
+class LinkedList extends HTMLElement {
     constructor() {
         super();
     };
@@ -20,6 +20,7 @@ const append_button = document.getElementById('append');
 const insert_button = document.getElementById('insert');
 const remove_button = document.getElementById('remove');
 const input1 = document.getElementById('input1');
+const indexInput = document.getElementById('indexInput');
 const input2 = document.getElementById('input2');
 const input3 = document.getElementById('input3');
 const container = document.getElementById('container');
@@ -27,7 +28,7 @@ const list = document.getElementById("linked-list");
 const insertErrorLabel = document.getElementById('insertError');
 
 append_button.addEventListener('click', function() {append_element(input2)});
-insert_button.addEventListener('click', function() {insert_element(input1)});
+insert_button.addEventListener('click', function() {insert_element(input1, indexInput)});
 remove_button.addEventListener('click', function() {remove_element(input3)});
 
 function updateList(inputVal) {
@@ -69,13 +70,14 @@ function append_element(input) {
 
     linkedListItem.appendChild(div);
     linkedListItem.appendChild(arrow);
+    //linkedListItem.classList.add('fade-in');
 
     list.appendChild(linkedListItem);
 }
 
 function insert_element(input, inputIndex) {
     insertErrorLabel.innerHTML = "";
-    if (input.value.length <= 0){
+    if (input.value.length <= 0 || inputIndex.value.length <= 0){
         insertErrorLabel.innerHTML = "Please input valid values."
         return;
     }
