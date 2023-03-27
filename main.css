@@ -24,12 +24,32 @@ h1 {
     flex-direction: row;
     align-items: center;
     text-align: center;
-    opacity: 100;
-    transition: opacity 0.5s ease-in-out;
 }
 
-.list-item.fade-in {
-    opacity: 1;
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 100;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.new-item {
+    animation: fadein 1s linear;
+}
+
+.remove-item {
+    animation: fadeout 1s linear;
 }
 
 .container {
