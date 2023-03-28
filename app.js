@@ -67,7 +67,6 @@ function append_element(input) {
     arrow.innerHTML = "&rarr;";
 
     div.style.padding = "1em";
-    div.style.color = "red";
     div.style.outline = "1px solid black";
     div.style.fontSize = 12;
     div.style.textAlign = "center";
