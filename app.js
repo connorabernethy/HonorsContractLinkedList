@@ -19,10 +19,13 @@ customElements.define("linked-list-item", LinkedListItem);
 const append_button = document.getElementById('append');
 const insert_button = document.getElementById('insert');
 const remove_button = document.getElementById('remove');
+const search_button = document.getElementById('search');
+const sort_button = document.getElementById('sort');
 const input1 = document.getElementById('input1');
 const indexInput = document.getElementById('indexInput');
 const input2 = document.getElementById('input2');
 const input3 = document.getElementById('input3');
+const input4 = document.getElementById('input4');
 const container = document.getElementById('container');
 const list = document.getElementById("linked-list");
 const insertErrorLabel = document.getElementById('insertError');
@@ -30,6 +33,8 @@ const insertErrorLabel = document.getElementById('insertError');
 append_button.addEventListener('click', function() {append_element(input2)});
 insert_button.addEventListener('click', function() {insert_element(input1, indexInput)});
 remove_button.addEventListener('click', function() {remove_element(input3)});
+search_button.addEventListener('click', function() {searchForElement(input4)});
+sort_button.addEventListener('click', function() {sortElements()});
 
 function updateList(inputVal) {
     const children = list.children;
@@ -50,6 +55,69 @@ function removeElementWithFade(element) {
     setTimeout(function() {
         element.parentNode.removeChild(element);
     }, 1000);
+}
+
+function swapElements(element1, element2) {
+    return new Promise((resolve => {
+        var tempE = element1.style.transform;
+        element1.style.transform = element2.style.transform;
+        element2.style.transform = tempE;
+
+        window.requestAnimationFrame(function() {
+            setTimeout(() => {
+                list.insertBefore(element2, element1);
+                resolve();
+            }, 250);
+        });
+    }));
+}
+
+async function sortElements(delay = 100) {
+    var linkedList = list.children;
+
+    for (var i = 0; i < linkedList.length; i+= 1){
+        for (var j = 0; j < linkedList.length - i - 1; j += 1) {
+            linkedList[j].style.color = "red";
+            linkedList[j+1].style.color = "red";
+
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, delay);
+            });
+
+            var item1 = Number(linkedList[j].childNodes[0].innerHTML);
+            var item2 = Number(linkedList[j+1].childNodes[0].innerHTML);
+
+            if (item1 > item2) {
+                await swapElements(linkedList[j], linkedList[j+1]);
+                linkedList = document.querySelectorAll(".list-item-container");
+            }
+
+            linkedList[j].style.color = "blue";
+            linkedList[j+1].style.color = "blue";
+        }
+
+        linkedList[linkedList.length - i - 1].style.color = "black";
+    }
+
+    listData.sort((a, b) => a - b);
+}
+
+// fix
+function searchForElement(input) {
+    const children = list.children;
+    const value = input.value;
+    Array.from(children).forEach((child) => {
+        child.childNodes[0].style.transition = "outline 1s linear";
+        setTimeout(function() {
+            if (value === child.childNodes[0].innerHTML) {
+                child.childNodes[0].style.outline = "2px solid green";
+            } else {
+                child.style.color = "red";
+            }
+        }, 1000)
+    })
 }
 
 
@@ -83,12 +151,14 @@ function append_element(input) {
 function insert_element(input, inputIndex) {
     insertErrorLabel.innerHTML = "";
     // Handle invalid inputs
-    if (input.value.length <= 0 || inputIndex.value.length <= 0 || !Number.isInteger(parseInt(input.value)) || !Number.isInteger(parseInt(inputIndex.value))){
+    if (input.value.length <= 0 || inputIndex.value.length <= 0 
+        || !Number.isInteger(parseInt(input.value)) 
+        || !Number.isInteger(parseInt(inputIndex.value))){
         insertErrorLabel.innerHTML = "Please input valid values."
         return;
     }
 
-    if (inputIndex.value > listData.length && listData.length != 0 || inputIndex.value < 0) {
+    if (inputIndex.value > listData.length || inputIndex.value < 0) {
         insertErrorLabel.innerHTML = "Please input a valid index."
         return;
     }
@@ -101,7 +171,6 @@ function insert_element(input, inputIndex) {
     arrow.innerHTML = "&rarr;";
 
     div.style.padding = "1em";
-    div.style.color = "red";
     div.style.outline = "1px solid black";
     div.style.fontSize = 12;
     div.style.textAlign = "center";
