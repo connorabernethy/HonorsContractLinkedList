@@ -46,7 +46,7 @@ function updateList(inputVal) {
             const index = listData.indexOf(parseInt(inputVal));
             const deletedItem = listData.splice(index, 1);
         }
-    })
+    });
 }
 
 function removeElementWithFade(element) {
@@ -104,28 +104,23 @@ async function sortElements(delay = 100) {
     listData.sort((a, b) => a - b);
 }
 
-// fix
 function searchForElement(input) {
-    const children = list.children;
-    const value = input.value;
-    Array.from(children).forEach((child) => {
-        child.childNodes[0].style.transition = "outline 1s linear";
-        setTimeout(function() {
-            if (value === child.childNodes[0].innerHTML) {
-                child.childNodes[0].style.outline = "2px solid green";
-            } else {
-                child.style.color = "red";
+    if (check_input(input)) {
+        const children = list.children;
+        Array.from(children).forEach((child) => {
+            if (input.value === child.childNodes[0].innerHTML) {
+                child.style.color = "gold";
             }
-        }, 1000)
-    })
+            setTimeout(function() {
+                child.style.color = "black";
+            }, 3000);
+        });
+    } else{return;}
 }
 
 
 function append_element(input) {
-    if (input.value.length <= 0 || !Number.isInteger(parseInt(input.value))){
-        insertErrorLabel.innerHTML = "Please input valid values."
-        return;
-    }
+    if (check_input(input)){
     listData.push(parseInt(input.value));
 
     const linkedListItem = document.createElement("div");
@@ -146,6 +141,7 @@ function append_element(input) {
     linkedListItem.classList.add('list-item-container', 'new-item');
 
     list.appendChild(linkedListItem);
+    } else {return;}
 }
 
 function insert_element(input, inputIndex) {
@@ -182,12 +178,29 @@ function insert_element(input, inputIndex) {
     linkedListItem.classList.add('list-item-container', 'new-item');
 
     list.insertBefore(linkedListItem, list.children[parseInt(inputIndex.value)]);
-    //list.appendChild(linkedListItem);
     console.log(listData);
 }
 
 function remove_element(inputVal) {
+    check_input(inputVal);
     updateList(inputVal.value);
 
     console.log(listData);
+}
+
+function check_input(input) {
+    if (listData.length >= 50) {
+        insertErrorLabel.innerHTML = "List length max = 50.";
+        return false;
+    } else {
+        insertErrorLabel.innerHTML = "";
+    }
+
+    if (input.value.length <= 0 || !Number.isInteger(parseInt(input.value))){
+        insertErrorLabel.innerHTML = "Please input valid values."
+        return false;
+    } else {
+        insertErrorLabel.innerHTML = "";
+        return true;
+    }
 }
