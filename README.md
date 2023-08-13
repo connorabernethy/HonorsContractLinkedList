@@ -14,7 +14,7 @@ functionality of a Linked List as a data structure using animations.
 
 ## Link
 
-Check out the website here: [LinkedList App](http://linked-list-honors-contract.s3-website-us-west-1.amazonaws.com/)
+Check out the web app here: [LinkedList App](http://linked-list-honors-contract.s3-website-us-west-1.amazonaws.com/)
 
 
 > Connor Abernethy
